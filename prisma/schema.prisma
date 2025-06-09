@@ -1,0 +1,63 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum TipoAlerta {
+  EXCESO
+  MODERADO
+  LEVE
+}
+
+enum TipoAmbiental {
+  TEMPERATURA
+  HUMEDAD
+  CO2
+}
+
+model Aula {
+  id                    Int                     @id @default(autoincrement())
+  nombre                String                  @unique
+  ubicacion             String
+  aforo                 Int
+  MedicionesAmbientales MedicionesAmbientales[]
+  Conteos               ConteoPersonas[]
+  Alertas               Alerta[]
+}
+
+model MedicionesAmbientales {
+  id          Int      @id @default(autoincrement())
+  aulaId      Int
+  temperatura Float?
+  humedad     Float?
+  co2_ppm     Float?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  aula Aula @relation(fields: [aulaId], references: [id])
+}
+
+model ConteoPersonas {
+  id        Int      @id @default(autoincrement())
+  aulaId    Int
+  cantidad  Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  aula Aula @relation(fields: [aulaId], references: [id])
+}
+
+model Alerta {
+  id           Int           @id @default(autoincrement())
+  aulaId       Int
+  tipo         TipoAlerta
+  contaminante TipoAmbiental
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  aula Aula @relation(fields: [aulaId], references: [id])
+}
