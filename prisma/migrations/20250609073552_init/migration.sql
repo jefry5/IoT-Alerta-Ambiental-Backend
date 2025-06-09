@@ -5,6 +5,17 @@ CREATE TYPE "TipoAlerta" AS ENUM ('EXCESO', 'MODERADO', 'LEVE');
 CREATE TYPE "TipoAmbiental" AS ENUM ('TEMPERATURA', 'HUMEDAD', 'CO2');
 
 -- CreateTable
+CREATE TABLE "Usuario" (
+    "id" TEXT NOT NULL,
+    "username" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Usuario_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "Aula" (
     "id" SERIAL NOT NULL,
     "nombre" TEXT NOT NULL,
@@ -49,6 +60,9 @@ CREATE TABLE "Alerta" (
 
     CONSTRAINT "Alerta_pkey" PRIMARY KEY ("id")
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Usuario_username_key" ON "Usuario"("username");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Aula_nombre_key" ON "Aula"("nombre");

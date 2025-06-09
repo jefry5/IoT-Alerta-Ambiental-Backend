@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-router.post('login', (req, res) => {
-    return res.json({message: 'Sesión'});
-});
+// Métodos de los endpoints de Auth
+const { login } = require('../controllers/auth.controller');
+
+router.post('/login', login);
 
 module.exports = router;
