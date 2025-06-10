@@ -54,6 +54,7 @@ const loginUser = async (user, password, res) => {
   }
 
   // Generamos un token que se almacena en la cookie
+  // El token tiene una duración de 1 hora
   const token = jwt.sign({ usuario: usuario.username }, JWT_SECRET, {
     expiresIn: "1h",
   });
@@ -66,7 +67,7 @@ const loginUser = async (user, password, res) => {
 
   return {
     success: true,
-    message: "",
+    message: "Sesión iniciada correctamente",
     user: usuario.username,
   };
 };
