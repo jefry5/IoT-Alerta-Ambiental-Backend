@@ -21,30 +21,46 @@ const geUltimaMedicionPorAula = async (aulaName) => {
   // Extraemos el aula después de la validación
   const aula = validateAula.aula;
 
-  // Extraemos la última medición junto a la información del aula
-  const mediciones = await prisma.medicionesAmbientales.findMany({
+  const auladb = await prisma.aula.findUnique({
+    where: { id: aula.id },
+    select: {
+      nombre: true,
+      ubicacion: true,
+      aforo: true,
+    },
+  });
+
+  const ultimaMediciondb = await prisma.medicionesAmbientales.findFirst({
     where: { aulaId: aula.id },
+    orderBy: { createdAt: "desc" },
     select: {
       temperatura: true,
       humedad: true,
       co2_ppm: true,
-      aula: {
-        select: {
-          nombre: true,
-          ubicacion: true,
-          aforo: true,
-        },
-      },
-      updatedAt: true,
+      createdAt: true,
     },
-    orderBy: { createdAt: "desc" },
-    take: 1,
   });
+
+  const ultimoConteoCamdb = await prisma.conteoPersonas.findFirst({
+    where: { aulaId: aula.id },
+    orderBy: { createdAt: "desc" },
+    select: {
+      cantidad: true,
+    },
+  });
+
+  const resultado = {
+    ...ultimaMediciondb,
+    aula: {
+      ...auladb,
+      conteo_personas: ultimoConteoCamdb?.cantidad ?? 0,
+    },
+  };
 
   return {
     success: true,
     message: "Datos obtenidos correctamente",
-    data: mediciones[0] || null,
+    data: resultado || null,
   };
 };
 
