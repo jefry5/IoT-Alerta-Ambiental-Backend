@@ -18,9 +18,11 @@ app.use(cors({
 // Importamos las rutas de los endpoints
 const authRoutes = require('./routes/auth.routes');
 const sensorRoutes = require('./routes/sensor.routes');
+const plugRoutes = require('./routes/plug.routes');
 
 // Asociamos los prefijos de los endpoints
 app.use('/auth', authRoutes);
 app.use('/sensor', sensorRoutes);
+app.use('/plug', plugRoutes);
 
 module.exports = app;

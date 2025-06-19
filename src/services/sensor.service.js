@@ -64,9 +64,9 @@ const geUltimaMedicionPorAula = async (aulaName) => {
   };
 };
 
-// Método para obtener las ultimas mediciones por aula
-// **Extrae los datos de las ultimas 12 horas
-const getAllMedicionPorAula = async (aulaName) => {
+//Método para obtener la última medición de las variables ambientales por aula
+// **Extrae el último dato leído en las últimas horas en la base de datos
+const getLastMedicionPorAulaChart = async (aulaName) => {
   // Validamos los datos del aula
   const validateAula = await validarAulaPorNombre(aulaName);
   if (!validateAula.success) {
@@ -79,7 +79,48 @@ const getAllMedicionPorAula = async (aulaName) => {
   // Extraemos el aula después de la validación
   const aula = validateAula.aula;
 
-  // Extreamos las ultimas mediciones
+  // Extraemos la última medición realiza en la base de datos
+  const ultimaMedicion = await prisma.medicionesAmbientales.findFirst({
+    where: {
+      aulaId: aula.id,
+      createdAt: {
+        gte: new Date(Date.now() - LAST_HOURS),
+      },
+    },
+    select: {
+      temperatura: true,
+      humedad: true,
+      co2_ppm: true,
+      createdAt: true,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  return {
+    success: true,
+    message: "Datos obtenidos correctamente",
+    data: ultimaMedicion || null,
+  };
+};
+
+// Método para obtener las ultimas mediciones por aula
+// **Extrae los datos de las ultimas horas
+const getAllMedicionPorAulaChart = async (aulaName) => {
+  // Validamos los datos del aula
+  const validateAula = await validarAulaPorNombre(aulaName);
+  if (!validateAula.success) {
+    return {
+      success: validateAula.success,
+      message: validateAula.message,
+    };
+  }
+
+  // Extraemos el aula después de la validación
+  const aula = validateAula.aula;
+
+  // Extraemos las ultimas mediciones
   const mediciones = await prisma.medicionesAmbientales.findMany({
     where: {
       aulaId: aula.id,
@@ -104,4 +145,4 @@ const getAllMedicionPorAula = async (aulaName) => {
   };
 };
 
-module.exports = { geUltimaMedicionPorAula, getAllMedicionPorAula };
+module.exports = { geUltimaMedicionPorAula, getLastMedicionPorAulaChart, getAllMedicionPorAulaChart };
