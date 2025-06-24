@@ -2,6 +2,7 @@ const {
   geUltimaMedicionPorAula,
   getLastMedicionPorAulaChart,
   getAllMedicionPorAulaChart,
+  getDiagnosticoSensor,
 } = require("../services/sensor.service");
 
 // Método para obtener los ultimos datos de un aula
@@ -55,4 +56,25 @@ const getSensorAllDataChart = async (req, res) => {
   }
 };
 
-module.exports = { getSensorData, getSensorLastDataChart, getSensorAllDataChart };
+const getDiagnosticSensor = async (req, res) => {
+  try {
+    const { aulaName } = req.query;
+    const result = await getDiagnosticoSensor(aulaName);
+
+    if (!result.success) {
+      return res.status(401).json({ message: result.message });
+    }
+
+    return res.status(200).json({ message: result.message, data: result.data });
+  } catch (error) {
+    console.error("Error al obtener el diagnóstico del sensor:", error.message);
+    return res.status(500).json({ message: "Error interno del servidor" });
+  }
+};
+
+module.exports = {
+  getSensorData,
+  getSensorLastDataChart,
+  getSensorAllDataChart,
+  getDiagnosticSensor,
+};
