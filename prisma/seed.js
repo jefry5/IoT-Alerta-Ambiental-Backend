@@ -19,7 +19,7 @@ async function main() {
     data: {
       username: "admin",
       password: hashedPassword,
-    },
+    }
   });
   console.log("✅ Usuario creado:", usuario);
 }

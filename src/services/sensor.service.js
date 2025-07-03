@@ -40,6 +40,8 @@ const geUltimaMedicionPorAula = async (aulaName) => {
       temperatura: true,
       humedad: true,
       co2_ppm: true,
+      no2_ppm: true,
+      nh3_ppm: true,
       createdAt: true,
     },
   });
@@ -98,6 +100,8 @@ const getLastMedicionPorAulaChart = async (aulaName) => {
       temperatura: true,
       humedad: true,
       co2_ppm: true,
+      no2_ppm: true,
+      nh3_ppm: true,
       createdAt: true,
     },
     orderBy: {
@@ -123,7 +127,7 @@ const getLastMedicionPorAulaChart = async (aulaName) => {
       },
     },
     orderBy: {
-      createdAt: "asc",
+      createdAt: "desc",
     },
   });
 
@@ -164,6 +168,8 @@ const getAllMedicionPorAulaChart = async (aulaName) => {
       temperatura: true,
       humedad: true,
       co2_ppm: true,
+      no2_ppm: true,
+      nh3_ppm: true,
       createdAt: true,
     },
     orderBy: { createdAt: "asc" },
@@ -240,6 +246,8 @@ const getDiagnosticoSensor = async (aulaName) => {
       temperatura: true,
       humedad: true,
       co2_ppm: true,
+      no2_ppm: true,
+      nh3_ppm: true,
       createdAt: true,
     },
   });

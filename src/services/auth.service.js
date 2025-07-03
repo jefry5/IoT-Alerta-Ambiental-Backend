@@ -61,7 +61,7 @@ const loginUser = async (user, password, res) => {
   res.cookie("auth-token", token, {
     httpOnly: true,
     secure: false,
-    sameSite: "strict",
+    sameSite: "lax",
     maxAge: 3600000,
   });
 
@@ -72,4 +72,29 @@ const loginUser = async (user, password, res) => {
   };
 };
 
-module.exports = { loginUser };
+const logoutUser = (res) => {
+  res.clearCookie("auth-token", { path: "/" });
+};
+
+const getCookieStatus = (req) => {
+  const token = req.cookies?.["auth-token"];
+
+  if (!token) {
+    return {
+      valid: false,
+      message: "Tu sesión ha expirado. Por favor, inicia sesión nuevamente",
+    };
+  }
+
+  try {
+    jwt.verify(token, JWT_SECRET);
+    return { valid: true, message: "Tu sesión sigue activa" };
+  } catch (err) {
+    return {
+      valid: false,
+      message: "Tu sesión ha expirado. Por favor, inicia sesión nuevamente",
+    };
+  }
+};
+
+module.exports = { loginUser, logoutUser, getCookieStatus };

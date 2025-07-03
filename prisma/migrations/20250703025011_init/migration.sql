@@ -32,6 +32,8 @@ CREATE TABLE "MedicionesAmbientales" (
     "temperatura" DOUBLE PRECISION,
     "humedad" DOUBLE PRECISION,
     "co2_ppm" DOUBLE PRECISION,
+    "no2_ppm" DOUBLE PRECISION,
+    "nh3_ppm" DOUBLE PRECISION,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 

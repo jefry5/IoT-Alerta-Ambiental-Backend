@@ -3,7 +3,13 @@ const { turnPlugOn, turnPlugOff } = require("../services/plug.service");
 const turnOn = async (req, res) => {
   try {
     const result = await turnPlugOn();
-    return res.status(200).json({ status: "on", result });
+
+    const message =
+      result.message === "El enchufe ya estaba encendido."
+        ? "Ya estaba encendido"
+        : "Encendido correctamente";
+
+    return res.status(200).json({ status: "on", message, result });
   } catch (err) {
     return res
       .status(500)
@@ -14,9 +20,15 @@ const turnOn = async (req, res) => {
 const turnOff = async (req, res) => {
   try {
     const result = await turnPlugOff();
-    res.json({ status: "off", result });
+
+    const message =
+      result.message === "El enchufe ya estaba apagado."
+        ? "Ya estaba apagado"
+        : "Apagado correctamente";
+
+    return res.status(200).json({ status: "off", message, result });
   } catch (err) {
-    res
+    return res
       .status(500)
       .json({ error: "Error al apagar el enchufe", details: err.message });
   }

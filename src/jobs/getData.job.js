@@ -22,12 +22,16 @@ const fetchData = async ({ CHANNEL_ID, API_KEY, NOMBRE }) => {
       const humedad = parseFloat(entry.field2);
       const co2_ppm = parseFloat(entry.field3);
       const aula_name = entry.field4;
+      const no2_ppm = parseFloat(entry.field5);
+      const nh3_ppm = parseFloat(entry.field6);
 
       if (
         !aula_name ||
         isNaN(temperatura) ||
         isNaN(humedad) ||
-        isNaN(co2_ppm)
+        isNaN(co2_ppm) ||
+        isNaN(no2_ppm) ||
+        isNaN(nh3_ppm)
       ) {
         console.warn("❗ Datos inválidos. en medición");
         return;
@@ -54,7 +58,9 @@ const fetchData = async ({ CHANNEL_ID, API_KEY, NOMBRE }) => {
         ultimoRegistro &&
         ultimoRegistro.temperatura === temperatura &&
         ultimoRegistro.humedad === humedad &&
-        ultimoRegistro.co2_ppm === co2_ppm
+        ultimoRegistro.co2_ppm === co2_ppm &&
+        ultimoRegistro.no2_ppm === no2_ppm &&
+        ultimoRegistro.nh3_ppm === nh3_ppm
       ) {
         console.log("⚠️ Datos repetidos en medición, no se insertó.");
         return;
@@ -67,6 +73,8 @@ const fetchData = async ({ CHANNEL_ID, API_KEY, NOMBRE }) => {
           temperatura,
           humedad,
           co2_ppm,
+          no2_ppm,
+          nh3_ppm,
         },
       });
 

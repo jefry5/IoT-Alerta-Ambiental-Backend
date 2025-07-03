@@ -14,6 +14,8 @@ const generarDiagnosticoConGemini = async ({
   temperatura,
   humedad,
   co2_ppm,
+  no2_ppm,
+  nh3_ppm,
 }) => {
   try {
     const dispositivosDisponibles = ["enchufe"];
@@ -22,6 +24,8 @@ const generarDiagnosticoConGemini = async ({
                     - Temperatura: ${temperatura ?? "no disponible"} °C
                     - Humedad: ${humedad ?? "no disponible"} %
                     - CO₂: ${co2_ppm ?? "no disponible"} ppm
+                    - NO₂: ${no2_ppm ?? "no disponible"} ppm 
+                    - NH₃: ${nh3_ppm ?? "no disponible"} ppm 
 
                     Devuelve tu análisis en formato JSON **con esta estructura exacta**:
                     {
