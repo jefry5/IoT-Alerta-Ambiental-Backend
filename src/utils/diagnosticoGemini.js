@@ -20,7 +20,7 @@ const generarDiagnosticoConGemini = async ({
   try {
     const dispositivosDisponibles = ["enchufe"];
     const prompt = `
-                    Actúa como un experto en salud ambiental para aulas universitarias. Evalúa el ambiente a partir de estos valores:
+                    Actúa como un experto en salud ambiental para aulas universitarias en Lima, Perú. Evalúa el ambiente a partir de estos valores:
                     - Temperatura: ${temperatura ?? "no disponible"} °C
                     - Humedad: ${humedad ?? "no disponible"} %
                     - CO₂: ${co2_ppm ?? "no disponible"} ppm

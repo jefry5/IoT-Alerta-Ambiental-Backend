@@ -17,16 +17,16 @@ const calcularEstadoAmbiental = ({ temperatura, humedad, co2_ppm }) => {
   // Valores de referencia para los límites de confort ambiental
   const limites = {
     temperatura: {
-      leve: 27,
-      critico: 30, // >30°C puede causar disconfort térmico severo
+      leve: 19,
+      critico: 23,
     },
     humedad: {
       leve: 70,
-      critico: 80, // >80% puede favorecer crecimiento de hongos y afectar concentración
+      critico: 80, 
     },
     co2: {
-      leve: 1000,
-      critico: 1500, // >1500 ppm indica mala ventilación (riesgo cognitivo y de salud)
+      leve: 800,
+      critico: 1000, 
     },
   };
 
