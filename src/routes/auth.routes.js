@@ -1,8 +1,12 @@
 const express = require('express');
 const router = express.Router();
 
-router.post('login', (req, res) => {
-    return res.json({message: 'Sesión'});
-});
+// Métodos de los endpoints de Auth
+const { login, logout, cookieStatus } = require('../controllers/auth.controller');
+
+// Rutas de los endpoints
+router.post('/login', login);
+router.post('/logout', logout);
+router.get('/cookie-status', cookieStatus); 
 
 module.exports = router;
